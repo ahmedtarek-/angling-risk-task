@@ -424,7 +424,7 @@ var post_task_block = {
 
 /* define static blocks */
 var feedback_instruct_text =
-	'Welcome to the experiment. This experiment will take around 25 minutes. Press <strong>enter</strong> to begin.'
+	'Welcome to the experiment. This experiment will take around 25 minutes. Press <strong>enter</strong> to begin. </br> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Test-Logo.svg/783px-Test-Logo.svg.png.jpg" alt="Girl in a jacket" width=300>'
 var feedback_instruct_block = {
 	type: 'poldrack-text',
 	cont_key: [13],
