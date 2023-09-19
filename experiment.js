@@ -175,21 +175,21 @@ function makeFish(fish_num) {
         max_x = $('.lake').width() * 0.9;
         max_y = $('.lake').height() * 0.9;
     }
-    for (i = 0; i < fish_num - 1; i++) {
-        // red_fish_num += 1
+    for (i = 0; i < fish_num; i++) {
+        red_fish_num += 1
         if (weather == "Sunny") {
             $('.lake').append('<div class = redfish id = red_fish' + red_fish_num + '></div>')
         }
     }
-    if (weather == "Sunny") {
-        $('.lake').append('<div class = bluefish id = blue_fish></div>')
-    }
+    // if (weather == "Sunny") {
+    //     $('.lake').append('<div class = bluefish id = blue_fish></div>')
+    // }
     place_fish()
     // if (weather == "Sunny") {
     //     // $('#red_count').html('<strong># Red Fish in lake:</strong>: ' + red_fish_num)
     //     // $('#blue_count').html('<strong># Blue Fish in lake:</strong>: 1')
     // }
-    total_fish_num = red_fish_num + 1
+    total_fish_num = red_fish_num
 }
 
 function goFish() {
