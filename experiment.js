@@ -72,7 +72,7 @@ function getGame() {
     by editing "game_setup" a string which determines the html to display, followed by calling the "makeFish"
     function, which...makes fish.
     */
-    if (num_fish_curr_pond === 0) {
+    if (false) {
         round_over = 0
         trial_num = 0
         game_state = game_setup
@@ -104,14 +104,14 @@ function getGame() {
         // if (release == "Keep") {
         //     game_state = appendTextAfter(game_state, 'Red Fish in Cooler: </strong>', trip_bank)
         // }
-        $('.jspsych-display-element').html(game_state)
         if (weather == "Sunny") {
             $('.lake').css("background-color", "LightBlue")
         } else {
             $('.lake').css("background-color", "CadetBlue")
         }
         setTimeout(() => {
-            console.log("Inside Condition 2 (after waitin' for some time)")
+            $('.jspsych-display-element').html(game_state)
+            console.log("Inside Condition 2 (after waitin' for some time): ", fishWaitingTime)
             console.log("== Loading a new fish for this round with ", num_fish_curr_pond)
             makeFish(1)
         }, fishWaitingTime);
