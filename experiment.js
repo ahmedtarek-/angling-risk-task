@@ -72,7 +72,7 @@ function getGame() {
     by editing "game_setup" a string which determines the html to display, followed by calling the "makeFish"
     function, which...makes fish.
     */
-    if (total_fish_num === 0) {
+    if (num_fish_curr_pond === 0) {
         round_over = 0
         trial_num = 0
         game_state = game_setup
@@ -197,7 +197,7 @@ function goFish() {
         is increased by "pay". If it is blue the round ends. If the release rule is "Keep", the fish is also removed
         from the lake. Coded as keycode 36 for jspsych
     */
-    if (red_fish_num === 0) {
+    if (num_fish_curr_pond === 0) {
         $('#blue_fish').remove();
         trip_bank = 0
         $(".lake").html('')
@@ -206,7 +206,7 @@ function goFish() {
         last_pay = 0
         round_over = 1
         round_num += 1
-        round_over_text = "There's no more fish in this pond. Now you go to the next round"
+        round_over_text = "There's no more fish in this pond. Now you go to the next pond"
         num_fish_curr_pond = jsPsych.randomization.shuffle(num_fish_in_ponds)[0]
     } else {
         if (release == "Keep") {
