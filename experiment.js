@@ -111,15 +111,17 @@ function getGame() {
         }
         setTimeout(() => {
             $('.jspsych-display-element').html(game_state)
-            console.log("Inside Condition 2 (after waitin' for some time): ", fishWaitingTime)
+            console.log("Inside Condition 2 (after waitin' for some time): ", fishWaitingTime())
             console.log("== Loading a new fish for this round with ", num_fish_curr_pond)
             makeFish(1)
-        }, fishWaitingTime);
+        }, fishWaitingTime());
     }
 }
 
+// TODO: put back to 0.005
 var fishWaitingTime = function() {
-    return 1000 / (0.005 * num_fish_curr_pond)
+    console.log("-- Inside fishWaitingTime Just to be sure. num_fish_curr_pond: ", num_fish_curr_pond)
+    return 1000 / (0.5 * num_fish_curr_pond)
 }
 
 function get_data() {
@@ -350,7 +352,9 @@ var performance_var = 0
 var num_practice_rounds = 1
 var num_rounds = 5
 var num_fish_in_ponds = [5,100,8,30,17]
-var num_fish_curr_pond = jsPsych.randomization.shuffle(num_fish_in_ponds)[0]
+// TODO: put back
+// var num_fish_curr_pond = jsPsych.randomization.shuffle(num_fish_in_ponds)[0]
+var num_fish_curr_pond = num_fish_in_ponds
 var red_fish_num = num_fish_curr_pond
 var total_fish_num = num_fish_curr_pond
 var start_fish_num = 0
