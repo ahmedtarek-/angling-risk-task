@@ -354,7 +354,7 @@ var num_rounds = 5
 var num_fish_in_ponds = [5,100,8,30,17]
 // TODO: put back
 // var num_fish_curr_pond = jsPsych.randomization.shuffle(num_fish_in_ponds)[0]
-var num_fish_curr_pond = num_fish_in_ponds
+var num_fish_curr_pond = num_fish_in_ponds[0]
 var red_fish_num = num_fish_curr_pond
 var total_fish_num = num_fish_curr_pond
 var start_fish_num = 0
