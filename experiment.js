@@ -197,32 +197,30 @@ function goFish() {
         is increased by "pay". If it is blue the round ends. If the release rule is "Keep", the fish is also removed
         from the lake. Coded as keycode 36 for jspsych
     */
-    if (total_fish_num > 0) {
-        if (Math.random() < 1 / (total_fish_num)) {
-            $('#blue_fish').remove();
-            trip_bank = 0
-            $(".lake").html('')
-            red_fish_num = 0
-            total_fish_num = 0
-            last_pay = 0
-            round_over = 1
-            round_num += 1
-            round_over_text = "You caught the blue fish! You have lost all points collected this round."
-            num_fish_curr_pond = jsPsych.randomization.shuffle(num_fish_in_ponds)[0]
-        } else {
-            if (release == "Keep") {
-                $('#red_fish' + red_fish_num).remove()
-                red_fish_num -= 1
-                total_fish_num -= 1
-                num_fish_curr_pond -= 1
-            }
-            trip_bank += pay
-            last_pay = pay
-
+    if (red_fish_num === 0) {
+        $('#blue_fish').remove();
+        trip_bank = 0
+        $(".lake").html('')
+        red_fish_num = 0
+        total_fish_num = 0
+        last_pay = 0
+        round_over = 1
+        round_num += 1
+        round_over_text = "There's no more fish in this pond. Now you go to the next round"
+        num_fish_curr_pond = jsPsych.randomization.shuffle(num_fish_in_ponds)[0]
+    } else {
+        if (release == "Keep") {
+            $('#red_fish' + red_fish_num).remove()
+            red_fish_num -= 1
+            total_fish_num -= 1
+            num_fish_curr_pond -= 1
         }
+        trip_bank += pay
+        last_pay = pay
 
-        lake_state = $('.lake').html()
     }
+
+    lake_state = $('.lake').html()
 
     console.log("== num_fish_curr_pond: ", num_fish_curr_pond)
     console.log("== trip_bank: ", trip_bank)
