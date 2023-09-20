@@ -119,7 +119,7 @@ function getGame() {
 }
 
 var fishWaitingTime = function() {
-    return 1 / (0.005 * num_fish_curr_pond)
+    return 1000 / (0.005 * num_fish_curr_pond)
 }
 
 function get_data() {
@@ -349,7 +349,7 @@ var performance_var = 0
 // task specific variables
 var num_practice_rounds = 1
 var num_rounds = 5
-var num_fish_in_ponds = [5,10,8,3,2]
+var num_fish_in_ponds = [5,100,8,30,17]
 var num_fish_curr_pond = jsPsych.randomization.shuffle(num_fish_in_ponds)[0]
 var red_fish_num = num_fish_curr_pond
 var total_fish_num = num_fish_curr_pond
