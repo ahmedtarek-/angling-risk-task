@@ -118,10 +118,8 @@ function getGame() {
     }
 }
 
-// TODO: put back to 0.005
 var fishWaitingTime = function() {
-    console.log("-- Inside fishWaitingTime Just to be sure. num_fish_curr_pond: ", num_fish_curr_pond)
-    return 1000 / (0.5 * num_fish_curr_pond)
+    return 1000 / (0.005 * num_fish_curr_pond)
 }
 
 function get_data() {
@@ -199,7 +197,7 @@ function goFish() {
         is increased by "pay". If it is blue the round ends. If the release rule is "Keep", the fish is also removed
         from the lake. Coded as keycode 36 for jspsych
     */
-    if (num_fish_curr_pond === 0) {
+    if (num_fish_curr_pond === 1) {
         $('#blue_fish').remove();
         trip_bank = 0
         $(".lake").html('')
@@ -352,9 +350,7 @@ var performance_var = 0
 var num_practice_rounds = 1
 var num_rounds = 5
 var num_fish_in_ponds = [5,100,8,30,17]
-// TODO: put back
-// var num_fish_curr_pond = jsPsych.randomization.shuffle(num_fish_in_ponds)[0]
-var num_fish_curr_pond = num_fish_in_ponds[0]
+var num_fish_curr_pond = jsPsych.randomization.shuffle(num_fish_in_ponds)[0]
 var red_fish_num = num_fish_curr_pond
 var total_fish_num = num_fish_curr_pond
 var start_fish_num = 0
