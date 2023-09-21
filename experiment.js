@@ -93,7 +93,7 @@ function getGame() {
         makeFish(1)
         setTimeout(() => {
             console.log("=== Reloading dom because 5 seconds have passed since fish appeared")
-            goFish(false)
+            getGame()
         }, 5000);
     }, fishWaitingTime());
 }
@@ -202,8 +202,6 @@ function goFish(shouldPay) {
         if (shouldPay){
             trip_bank += pay
             last_pay = pay
-        } else {
-            last_pay = 0
         }
     }
 
