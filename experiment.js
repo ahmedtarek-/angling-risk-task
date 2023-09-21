@@ -73,56 +73,29 @@ function getGame() {
     function, which...makes fish.
     */
 
-    // TODO: Remove
-    if (false) {
-        round_over = 0
-        trial_num = 0
-        game_state = game_setup
-        game_state = appendTextAfter(game_state, 'Trip Bank (points): </strong>', trip_bank)
-        game_state = appendTextAfter(game_state, 'Total Fish Caught: </strong>', tournament_bank)
-        // game_state = appendTextAfter(game_state, 'Red Fish in Cooler: </strong>', 0)
-        game_state = appendTextAfter(game_state, "Catch N' ", release)
-        game_state = appendTextAfter(game_state, "weathertext>", weather)
-        $('.jspsych-display-element').html(game_state)
-        if (weather == "Sunny") {
-            $('.lake').css("background-color", "LightBlue")
-        } else {
-            $('.lake').css("background-color", "CadetBlue")
-        }
-        console.log("Inside Condition 1")
+    
+    // Update game state with cached values
+    round_over = 0
+    game_state = game_setup
+    game_state = appendTextAfter(game_state, 'lake>', lake_state)
+    
+    game_state = appendTextAfter(game_state, 'Trip Bank (points): </strong>', trip_bank)
+    game_state = appendTextAfter(game_state, 'Total Fish Caught: </strong>', tournament_bank)
+    game_state = appendTextAfter(game_state, "Catch N' ", release)
+    game_state = appendTextAfter(game_state, "weathertext>", weather)
+    
+    $('.jspsych-display-element').html(game_state)
+    $('.lake').css("background-color", "LightBlue")
+    
+    setTimeout(() => {
+        console.log("== Inside Condition 2 (after waitin' for some time): ", fishWaitingTime())
+        console.log("== Loaded a new fish for this round with ", num_fish_curr_pond)
         makeFish(1)
-    } else {
-        // Update game state with cached values
-        round_over = 0
-        game_state = game_setup
-        game_state = appendTextAfter(game_state, 'lake>', lake_state)
-        // if (weather == "Sunny") {
-        //     // game_state = appendTextAfter(game_state, '# Red Fish in lake: </strong>', red_fish_num)
-        //     // game_state = appendTextAfter(game_state, '# Blue Fish in lake: </strong>', total_fish_num - red_fish_num)
-        // }
-        game_state = appendTextAfter(game_state, 'Trip Bank (points): </strong>', trip_bank)
-        game_state = appendTextAfter(game_state, 'Total Fish Caught: </strong>', tournament_bank)
-        game_state = appendTextAfter(game_state, "Catch N' ", release)
-        game_state = appendTextAfter(game_state, "weathertext>", weather)
-        // if (release == "Keep") {
-        //     game_state = appendTextAfter(game_state, 'Red Fish in Cooler: </strong>', trip_bank)
-        // }
-        $('.jspsych-display-element').html(game_state)
-        if (weather == "Sunny") {
-            $('.lake').css("background-color", "LightBlue")
-        } else {
-            $('.lake').css("background-color", "CadetBlue")
-        }
         setTimeout(() => {
-            console.log("== Inside Condition 2 (after waitin' for some time): ", fishWaitingTime())
-            console.log("== Loaded a new fish for this round with ", num_fish_curr_pond)
-            makeFish(1)
-            setTimeout(() => {
-                console.log("=== Reloading dom because 5 seconds have passed since fish appeared")
-                goFish(false)
-            }, 5000);
-        }, fishWaitingTime());
-    }
+            console.log("=== Reloading dom because 5 seconds have passed since fish appeared")
+            goFish(false)
+        }, 5000);
+    }, fishWaitingTime());
 }
 
 var fishWaitingTime = function() {
@@ -229,6 +202,8 @@ function goFish(shouldPay) {
         if (shouldPay){
             trip_bank += pay
             last_pay = pay
+        } else {
+            last_pay = 0
         }
     }
 
@@ -883,23 +858,6 @@ var update_performance_var_block = {
     }
 }
 
-// var ask_fish_block = {
-//  type: 'survey-text',
-//  on_finish: function() {
-//      jsPsych.data.addDataToLastTrial({
-//          exp_stage: exp_stage
-//      })
-//  },
-//  data: {
-//      trial_id: "ask fish"
-//  },
-//  questions: [
-//      [
-//          "<p class = center-block-text>For this tournament, how many red fish are in the lake? Please enter a number between 1-200</p><p class = center-block-text>If you don't respond, or respond out of these bounds the number of red fish will be randomly set between 1-200.</p>"
-//      ]
-//  ],
-// }
-
 var set_fish_block = {
     type: 'call-function',
     on_finish: function() {
@@ -1016,62 +974,7 @@ var tournament_intro_block_practice = {
         round_num = 0
     }
 }
-// angling_risk_task_experiment.push(tournament_intro_block_practice)
-// angling_risk_task_experiment.push(ask_fish_block)
-// angling_risk_task_experiment.push(set_fish_block)
-// for (i = 0; i < num_practice_rounds; i++) {
-//     angling_risk_task_experiment.push(practice_node)
-//     angling_risk_task_experiment.push(round_over_block)
-// }
 
-
-
-// angling_risk_task_experiment.push(conditions_instructions_block)
-//practice each condition
-// for (b = 0; b < practiceblocks.length; b++) {
-//     block = practiceblocks[b]
-//     weather = block.weather
-//     release = block.release
-//     if (weather == "Sunny") {
-//         weather_rule = "you can see how many fish are in the lake"
-//     } else {
-//         weather_rule = "you won't be able to see how many fish are in the lake"
-//     }
-//     if (release == "Keep") {
-//         release_rule = "the fish you catch comes out of the lake"
-//     } else {
-//         release_rule = "the number of fish in the lake stays the same"
-//     }
-//     var tournament_intro_block_practice = {
-//         type: 'poldrack-text',
-//         text: '<div class = centerbox><p class = block-text>You will now start a tournament. The weather is <span style="color:blue">' +
-//             weather + '</span> which means ' + weather_rule +
-//             '. The release rule is <span style="color:red">' + release + '</span>, which means ' +
-//             release_rule +
-//             '.</p><p class = center-block-text>Press <strong>enter</strong> to begin.</p></div>',
-//         cont_key: [13],
-//         timing_response: 180000,
-//         data: {
-//             weather: weather,
-//             release: release,
-//             exp_stage: "practice",
-//             trial_id: "intro"
-//         },
-//         on_finish: function(data) {
-//             weather = data.weather
-//             release = data.release
-//             tournament_bank = 0
-//             round_num = 0
-//         }
-//     }
-//     angling_risk_task_experiment.push(tournament_intro_block_practice)
-//     // angling_risk_task_experiment.push(ask_fish_block)
-//     angling_risk_task_experiment.push(set_fish_block)
-//     for (i = 0; i < num_practice_rounds; i++) {
-//         angling_risk_task_experiment.push(practice_node)
-//         angling_risk_task_experiment.push(round_over_block)
-//     }
-// }
 
 angling_risk_task_experiment.push(start_test_block)
 // TODO: Remove this blocks iteration, doesn't make sense
