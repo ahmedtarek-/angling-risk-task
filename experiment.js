@@ -189,7 +189,6 @@ function goFish(shouldPay) {
         from the lake. Coded as keycode 36 for jspsych
     */
 
-    clearTimeout(fish_appear_timeout);
     if (num_fish_curr_pond === 1) {
         $('#blue_fish').remove();
         trip_bank = 0
@@ -215,6 +214,9 @@ function goFish(shouldPay) {
     }
 
     lake_state = $('.lake').html()
+    
+    clearTimeout(fish_appear_timeout);
+    getGame()
 
     console.log("== num_fish_curr_pond: ", num_fish_curr_pond)
     console.log("== trip_bank: ", trip_bank)
