@@ -119,12 +119,7 @@ function getGame() {
             makeFish(1)
             setTimeout(() => {
                 console.log("=== Reloading dom because 5 seconds have passed since fish appeared")
-                $('#red_fish' + red_fish_num).remove()
-                red_fish_num -= 1
-                total_fish_num -= 1
-                num_fish_curr_pond -= 1
-
-                lake_state = $('.lake').html()
+                goFish(false)
             }, 5000);
         }, fishWaitingTime());
     }
@@ -208,7 +203,7 @@ function makeFish(fish_num) {
     total_fish_num = red_fish_num
 }
 
-function goFish() {
+function goFish(ShouldPay) {
     /* If the subject chooses to goFish, one fish is randomly selected from the lake. If it is red, the trip bank
         is increased by "pay". If it is blue the round ends. If the release rule is "Keep", the fish is also removed
         from the lake. Coded as keycode 36 for jspsych
@@ -226,14 +221,16 @@ function goFish() {
         indx_fish_curr_pond += 1
         num_fish_curr_pond = num_fish_in_ponds[indx_fish_curr_pond]
     } else {
-        if (release == "Keep") {
-            $('#red_fish' + red_fish_num).remove()
-            red_fish_num -= 1
-            total_fish_num -= 1
-            num_fish_curr_pond -= 1
+        $('#red_fish' + red_fish_num).remove()
+        red_fish_num -= 1
+        total_fish_num -= 1
+        num_fish_curr_pond -= 1
+
+        if (shouldPay){
+            trip_bank += pay
+            last_pay = pay
         }
-        trip_bank += pay
-        last_pay = pay
+
 
     }
 
@@ -751,7 +748,7 @@ var game_setup = "<div class = titlebox><div class = center-text>Catch N' </div>
     "<div class = infobox><p class = info-text id = tournament_bank><strong>Total Fish Caught: </strong></p></div>" +
     "</div>" +
     "</div>" +
-    "<div class = buttonbox><button id = 'goFish' class = select-button onclick = goFish()>Go Fish</button><button id = 'Collect' class = select-button onclick = collect()>Collect</button></div>"
+    "<div class = buttonbox><button id = 'goFish' class = select-button onclick = goFish(true)>Go Fish</button><button id = 'Collect' class = select-button onclick = collect()>Collect</button></div>"
     /* ************************************ */
     /* Set up jsPsych blocks */
     /* ************************************ */
@@ -1095,7 +1092,7 @@ for (b = 0; b < blocks.length; b++) {
     }
     var tournament_intro_block = {
         type: 'poldrack-text',
-        text: '<div class = centerbox><p class = block-text>You will now start the game.' +
+        text: '<div class = centerbox><p class = center-block-text>You will now start the game.' +
             '</p><p class = center-block-text>Press <strong>enter</strong> to begin.</p></div>',
         cont_key: [13],
         timing_response: 120000,
