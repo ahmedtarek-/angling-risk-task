@@ -203,7 +203,7 @@ function makeFish(fish_num) {
     total_fish_num = red_fish_num
 }
 
-function goFish(ShouldPay) {
+function goFish(shouldPay) {
     /* If the subject chooses to goFish, one fish is randomly selected from the lake. If it is red, the trip bank
         is increased by "pay". If it is blue the round ends. If the release rule is "Keep", the fish is also removed
         from the lake. Coded as keycode 36 for jspsych
@@ -230,8 +230,6 @@ function goFish(ShouldPay) {
             trip_bank += pay
             last_pay = pay
         }
-
-
     }
 
     lake_state = $('.lake').html()
