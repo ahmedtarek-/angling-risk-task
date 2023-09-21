@@ -72,6 +72,8 @@ function getGame() {
     by editing "game_setup" a string which determines the html to display, followed by calling the "makeFish"
     function, which...makes fish.
     */
+
+    // TODO: Remove
     if (false) {
         round_over = 0
         trial_num = 0
@@ -91,6 +93,7 @@ function getGame() {
         makeFish(1)
     } else {
         // Update game state with cached values
+        round_over = 0
         game_state = game_setup
         game_state = appendTextAfter(game_state, 'lake>', lake_state)
         // if (weather == "Sunny") {
@@ -111,8 +114,8 @@ function getGame() {
             $('.lake').css("background-color", "CadetBlue")
         }
         setTimeout(() => {
-            console.log("Inside Condition 2 (after waitin' for some time): ", fishWaitingTime())
-            console.log("== Loading a new fish for this round with ", num_fish_curr_pond)
+            console.log("== Inside Condition 2 (after waitin' for some time): ", fishWaitingTime())
+            console.log("== Loaded a new fish for this round with ", num_fish_curr_pond)
             makeFish(1)
         }, fishWaitingTime());
     }
