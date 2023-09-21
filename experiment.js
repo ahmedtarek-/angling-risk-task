@@ -91,9 +91,16 @@ function getGame() {
         console.log("== Inside Condition 2 (after waitin' for some time): ", fishWaitingTime())
         console.log("== Loaded a new fish for this round with ", num_fish_curr_pond)
         makeFish(1)
-        setTimeout(() => {
+        fish_appear_timeout = setTimeout(() => {
             console.log("=== Reloading dom because 5 seconds have passed since fish appeared")
+            // Decrement fish
+            red_fish_num -= 1
+            total_fish_num -= 1
+            num_fish_curr_pond -= 1
+
+            // Reload DOM
             getGame()
+
         }, 5000);
     }, fishWaitingTime());
 }
@@ -181,6 +188,8 @@ function goFish(shouldPay) {
         is increased by "pay". If it is blue the round ends. If the release rule is "Keep", the fish is also removed
         from the lake. Coded as keycode 36 for jspsych
     */
+
+    clearTimeout(fish_appear_timeout);
     if (num_fish_curr_pond === 1) {
         $('#blue_fish').remove();
         trip_bank = 0
@@ -701,6 +710,7 @@ var max_x = 0
 var min_y = 0
 var max_y = 0
 var filled_areas = [];
+var fish_appear_timeout = null;
 
 var game_setup = "<div class = titlebox><div class = center-text>Catch N' </div></div>" +
     "<div class = lake></div>" +
