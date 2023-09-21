@@ -751,7 +751,7 @@ var attention_check_block = {
     type: 'attention-check',
     timing_response: 180000,
     response_ends_trial: true,
-    timing_post_trial: 200
+    timing_post_trial: 0
 }
 
 var attention_node = {
@@ -797,7 +797,7 @@ var instructions_block = {
         trial_id: 'instruction'
     },
     show_clickable_nav: true,
-    timing_post_trial: 1000
+    timing_post_trial: 0
 };
 
 var instruction_node = {
@@ -834,7 +834,7 @@ var conditions_instructions_block = {
         trial_id: 'instruction'
     },
     show_clickable_nav: true,
-    timing_post_trial: 1000
+    timing_post_trial: 0
 };
 
 var end_block = {
@@ -974,7 +974,7 @@ var start_test_block = {
     timing_response: 180000,
     text: '<div class = centerbox><p class = center-block-text>Done with practice! We will now start the test tournaments. There will be four tournaments, each with 30 rounds of fishing.</p><p class = center-block-text>Press <strong>enter</strong> to begin the test.</p></div>',
     cont_key: [13],
-    timing_post_trial: 1000,
+    timing_post_trial: 0,
     on_finish: function() {
         tournament_bank = 0
         exp_stage = 'test'
