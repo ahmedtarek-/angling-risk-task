@@ -141,6 +141,7 @@ var jsPsych = (function() {
       }
     } else {
       if (current_trial.timing_post_trial > 0) {
+        DOM_target.html('<h2> Wir bauen die nachste Pond. Bitte haben sie geduld :)</h2>');
         setTimeout(next_trial, current_trial.timing_post_trial);
       } else {
         next_trial();
