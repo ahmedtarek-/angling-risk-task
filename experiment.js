@@ -854,7 +854,7 @@ var round_over_block = {
     data: {
         trial_id: "round_over"
     },
-    timing_post_trial: 0,
+    timing_post_trial: 30000,
     on_finish: function() {
         caught_blue = false
         if (round_over_text.indexOf('You caught the blue fish!') != -1) {
@@ -1075,11 +1075,8 @@ for (b = 0; b < blocks.length; b++) {
     block = blocks[b]
     weather = block.weather
     release = block.release
-    if (weather == "Sunny") {
-        weather_rule = "you can see how many fish are in the lake"
-    } else {
-        weather_rule = "you won't be able to see how many fish are in the lake"
-    }
+    weather_rule = "you can see how many fish are in the lake"
+    
     if (release == "Keep") {
         start_fish_num = 128
         release_rule = "the fish you catch comes out of the lake"
