@@ -117,6 +117,15 @@ function getGame() {
             console.log("== Inside Condition 2 (after waitin' for some time): ", fishWaitingTime())
             console.log("== Loaded a new fish for this round with ", num_fish_curr_pond)
             makeFish(1)
+            setTimeout(() => {
+                console.log("=== Reloading dom because 5 seconds have passed since fish appeared")
+                $('#red_fish' + red_fish_num).remove()
+                red_fish_num -= 1
+                total_fish_num -= 1
+                num_fish_curr_pond -= 1
+
+                lake_state = $('.lake').html()
+            }, 5000);
         }, fishWaitingTime());
     }
 }
@@ -186,15 +195,15 @@ function makeFish(fish_num) {
     }
     place_fish()
 
-    setTimeout(() => {
-        console.log("=== Reloading dom because 5 seconds have passed since fish appeared")
-        $('#red_fish' + red_fish_num).remove()
-        red_fish_num -= 1
-        total_fish_num -= 1
-        num_fish_curr_pond -= 1
+    // setTimeout(() => {
+    //     console.log("=== Reloading dom because 5 seconds have passed since fish appeared")
+    //     $('#red_fish' + red_fish_num).remove()
+    //     red_fish_num -= 1
+    //     total_fish_num -= 1
+    //     num_fish_curr_pond -= 1
 
-        lake_state = $('.lake').html()
-    }, 5000);
+    //     lake_state = $('.lake').html()
+    // }, 5000);
 
     total_fish_num = red_fish_num
 }
@@ -992,7 +1001,7 @@ weather_rule = "you can see how many fish are in the lake"
 release_rule = "the fish you catch comes out of the lake"
 var tournament_intro_block_practice = {
     type: 'poldrack-text',
-    text: '<div class = centerbox><p class = block-text>You will now start a tournament. The weather is <span style="color:blue">' +
+    text: '<div class = centerbox><p class = center-block-text>You will now start a tournament. The weather is <span style="color:blue">' +
         weather + '</span> which means ' + weather_rule +
         '. The release rule is <span style="color:red">' + release + '</span>, which means ' +
         release_rule +
