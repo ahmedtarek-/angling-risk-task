@@ -184,14 +184,18 @@ function makeFish(fish_num) {
             $('.lake').append('<div class = redfish id = red_fish' + red_fish_num + '></div>')
         }
     }
-    // if (weather == "Sunny") {
-    //     $('.lake').append('<div class = bluefish id = blue_fish></div>')
-    // }
     place_fish()
-    // if (weather == "Sunny") {
-    //     // $('#red_count').html('<strong># Red Fish in lake:</strong>: ' + red_fish_num)
-    //     // $('#blue_count').html('<strong># Blue Fish in lake:</strong>: 1')
-    // }
+
+    setTimeout(() => {
+        console.log("=== Reloading dom because 5 seconds have passed since fish appeared")
+        $('#red_fish' + red_fish_num).remove()
+        red_fish_num -= 1
+        total_fish_num -= 1
+        num_fish_curr_pond -= 1
+
+        lake_state = $('.lake').html()
+    }, 5000);
+
     total_fish_num = red_fish_num
 }
 
@@ -856,10 +860,6 @@ var round_over_block = {
     },
     timing_post_trial: 30000,
     on_finish: function() {
-        caught_blue = false
-        if (round_over_text.indexOf('You caught the blue fish!') != -1) {
-            caught_blue = true
-        }
         jsPsych.data.addDataToLastTrial({
             exp_stage: exp_stage,
             caught_blue: caught_blue,
