@@ -73,9 +73,16 @@ function getGame() {
     function, which...makes fish.
     */
 
+    // On a start of a round the round_over is set to 0
+    console.log("-- Start of getGame")
+    console.log("-- num_fish_curr_pond: ", num_fish_curr_pond)
+    console.log("-- num_fish_in_ponds[indx_fish_curr_pond]: ", num_fish_in_ponds[indx_fish_curr_pond])
+    console.log("----")
+    if (num_fish_curr_pond === num_fish_in_ponds[indx_fish_curr_pond]){
+        round_over = 0
+    }
     
     // Update game state with cached values
-    round_over = 0
     game_state = game_setup
     game_state = appendTextAfter(game_state, 'lake>', lake_state)
     
@@ -224,6 +231,8 @@ function goFish(shouldPay) {
 }
 
 function collect() {
+
+    console.log("-- Inside collect")
     round_over = 1
     round_num += 1
     round_over_text = "You collected the points from the trip bank (" + trip_bank +
@@ -930,6 +939,7 @@ var game_block = {
 var game_node = {
     timeline: [game_block],
     loop_function: function(data) {
+        console.log("-- Inside game_node, round_over: ", round_over)
         if (round_over == 1) {
             return false
         } else {
