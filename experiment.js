@@ -74,11 +74,8 @@ function getGame() {
     */
 
     // On a start of a round the round_over is set to 0
-    console.log("-- Start of getGame")
-    console.log("-- num_fish_curr_pond: ", num_fish_curr_pond)
-    console.log("-- num_fish_in_ponds[indx_fish_curr_pond]: ", num_fish_in_ponds[indx_fish_curr_pond])
-    console.log("----")
     if (num_fish_curr_pond === num_fish_in_ponds[indx_fish_curr_pond]){
+        console.log("-- Inside the first of round condition")
         round_over = 0
     }
     
@@ -94,7 +91,7 @@ function getGame() {
     $('.jspsych-display-element').html(game_state)
     $('.lake').css("background-color", "LightBlue")
     
-    setTimeout(() => {
+    main_timeout = setTimeout(() => {
         console.log("== Inside Condition 2 (after waitin' for some time): ", fishWaitingTime())
         console.log("== Loaded a new fish for this round with ", num_fish_curr_pond)
         makeFish(1)
@@ -252,6 +249,9 @@ function collect() {
     num_fish_curr_pond = num_fish_in_ponds[indx_fish_curr_pond]
     lake_state = $('.lake').html()
     cooler_state = $('.lake').html()
+
+    clearTimeout(fish_appear_timeout);
+    clearTimeout(main_timeout);
 }
 
 
@@ -722,6 +722,7 @@ var min_y = 0
 var max_y = 0
 var filled_areas = [];
 var fish_appear_timeout = null;
+var main_timeout = null;
 
 var game_setup = "<div class = titlebox><div class = center-text>Catch N' </div></div>" +
     "<div class = lake></div>" +
