@@ -91,12 +91,14 @@ function getGame() {
     $('.jspsych-display-element').html(game_state)
     $('.lake').css("background-color", "LightBlue")
     
+    clearTimeout(main_timeout);
     main_timeout = setTimeout(() => {
-        console.log("== Inside Condition 2 (after waitin' for some time): ", fishWaitingTime())
-        console.log("== Loaded a new fish for this round with ", num_fish_curr_pond)
+        console.log("-- Inside Condition 2 (after waitin' for some time): ", fishWaitingTime())
         makeFish(1)
+
+        clearTimeout(fish_appear_timeout);
         fish_appear_timeout = setTimeout(() => {
-            console.log("=== Reloading dom because 5 seconds have passed since fish appeared")
+            console.log("---- Reloading dom because 5 seconds have passed since fish appeared")
             // Decrement fish
             red_fish_num -= 1
             total_fish_num -= 1
@@ -219,12 +221,15 @@ function goFish(shouldPay) {
 
     lake_state = $('.lake').html()
     
+    
+    clearTimeout(main_timeout);
     clearTimeout(fish_appear_timeout);
     getGame()
 
-    console.log("== num_fish_curr_pond: ", num_fish_curr_pond)
-    console.log("== trip_bank: ", trip_bank)
-    console.log("== tournament_bank: ", tournament_bank)
+    console.log("==== Inside goFish")
+    console.log("==== num_fish_curr_pond: ", num_fish_curr_pond)
+    console.log("==== trip_bank: ", trip_bank)
+    console.log("==== tournament_bank: ", tournament_bank)
 }
 
 function collect() {
@@ -250,8 +255,8 @@ function collect() {
     lake_state = $('.lake').html()
     cooler_state = $('.lake').html()
 
-    clearTimeout(fish_appear_timeout);
     clearTimeout(main_timeout);
+    clearTimeout(fish_appear_timeout);
 }
 
 
