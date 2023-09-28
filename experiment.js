@@ -73,6 +73,9 @@ function getGame() {
     function, which...makes fish.
     */
 
+    console.log("-- Inside getGame --")
+    console.log("-- round_over:", round_over)
+
     // On a start of a round the round_over is set to 0
     if (num_fish_curr_pond === num_fish_in_ponds[indx_fish_curr_pond]){
         console.log("-- Inside the first of round condition")
@@ -93,7 +96,7 @@ function getGame() {
     
     clearTimeout(main_timeout);
     main_timeout = setTimeout(() => {
-        console.log("-- Inside Condition 2 (after waitin' for some time): ", fishWaitingTime())
+        console.log("-- Inside main_timeout (after waitin' for some time): ", fishWaitingTime())
         makeFish(1)
 
         clearTimeout(fish_appear_timeout);
@@ -103,6 +106,11 @@ function getGame() {
             red_fish_num -= 1
             total_fish_num -= 1
             num_fish_curr_pond -= 1
+
+            console.log("-- round_over:", round_over)
+            if (num_fish_curr_pond === 1){
+                return false
+            }
 
             // Reload DOM
             getGame()
@@ -255,8 +263,11 @@ function collect() {
     lake_state = $('.lake').html()
     cooler_state = $('.lake').html()
 
+
     clearTimeout(main_timeout);
     clearTimeout(fish_appear_timeout);
+
+    return false
 }
 
 
