@@ -73,9 +73,6 @@ function getGame() {
     function, which...makes fish.
     */
 
-    // Set functionality of goFish method to false
-    goFishFunctional = false
-
     console.log("-- Inside getGame --")
     console.log("-- round_over:", round_over)
 
@@ -93,6 +90,7 @@ function getGame() {
     game_state = appendTextAfter(game_state, 'Total Fish Caught: </strong>', tournament_bank)
     game_state = appendTextAfter(game_state, "Catch N' ", release)
     game_state = appendTextAfter(game_state, "weathertext>", weather)
+    game_state = appendTextAfter(game_state, "goFish(true)", " disabled")
     
     $('.jspsych-display-element').html(game_state)
     $('.lake').css("background-color", "LightBlue")
@@ -102,8 +100,10 @@ function getGame() {
         console.log("-- Inside main_timeout (after waitin' for some time): ", fishWaitingTime())
         makeFish(1)
 
-        // Set functionality of goFish method to false
-        goFishFunctional = true
+        game_state = game_setup
+        game_state = appendTextAfter(game_state, "goFish(true)", " disabled")
+        
+        $('.jspsych-display-element').html(game_state)
 
         clearTimeout(fish_appear_timeout);
         fish_appear_timeout = setTimeout(() => {
@@ -209,42 +209,39 @@ function goFish(shouldPay) {
         from the lake. Coded as keycode 36 for jspsych
     */
 
-    if (goFishFunctional){
-        if (num_fish_curr_pond === 1) {
-            $('#blue_fish').remove();
-            // Update tournament back
-            tournament_bank += trip_bank
+    if (num_fish_curr_pond === 1) {
+        $('#blue_fish').remove();
+        // Update tournament back
+        tournament_bank += trip_bank
 
-            trip_bank = 0
-            $(".lake").html('')
-            red_fish_num = 0
-            total_fish_num = 0
-            last_pay = 0
-            round_over = 1
-            round_num += 1
-            round_over_text = "There's no more fish in this pond. Now you go to the next pond"
-            indx_fish_curr_pond += 1
-            num_fish_curr_pond = num_fish_in_ponds[indx_fish_curr_pond]
+        trip_bank = 0
+        $(".lake").html('')
+        red_fish_num = 0
+        total_fish_num = 0
+        last_pay = 0
+        round_over = 1
+        round_num += 1
+        round_over_text = "There's no more fish in this pond. Now you go to the next pond"
+        indx_fish_curr_pond += 1
+        num_fish_curr_pond = num_fish_in_ponds[indx_fish_curr_pond]
 
-        } else {
-            $('#red_fish' + red_fish_num).remove()
-            red_fish_num -= 1
-            total_fish_num -= 1
-            num_fish_curr_pond -= 1
+    } else {
+        $('#red_fish' + red_fish_num).remove()
+        red_fish_num -= 1
+        total_fish_num -= 1
+        num_fish_curr_pond -= 1
 
-            if (shouldPay){
-                trip_bank += pay
-                last_pay = pay
-            }
+        if (shouldPay){
+            trip_bank += pay
+            last_pay = pay
         }
-
-        lake_state = $('.lake').html()
-        
-        
-        clearTimeout(fish_appear_timeout);
-        clearTimeout(main_timeout);
     }
 
+    lake_state = $('.lake').html()
+    
+    
+    clearTimeout(fish_appear_timeout);
+    clearTimeout(main_timeout);
 
     console.log("==== Inside goFish")
     console.log("==== num_fish_curr_pond: ", num_fish_curr_pond)
@@ -750,7 +747,6 @@ var max_y = 0
 var filled_areas = [];
 var fish_appear_timeout = null;
 var main_timeout = null;
-var goFishFunctional = false;
 
 var game_setup = "<div class = titlebox><div class = center-text>Catch N' </div></div>" +
     "<div class = lake></div>" +
@@ -1071,5 +1067,5 @@ for (b = 0; b < blocks.length; b++) {
     }
     angling_risk_task_experiment.push(update_performance_var_block)
 }
-// angling_risk_task_experiment.push(post_task_block)
+angling_risk_task_experiment.push(post_task_block)
 angling_risk_task_experiment.push(end_block)
