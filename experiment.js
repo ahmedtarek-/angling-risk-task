@@ -99,36 +99,36 @@ function getGame() {
         console.log("-- Inside main_timeout (after waitin' for some time): ", fishWaitingTime())
         makeFish(1)
 
-        clearTimeout(fish_appear_timeout);
-        fish_appear_timeout = setTimeout(() => {
-            console.log("---- Reloading dom because 5 seconds have passed since fish appeared")
-            // Decrement fish
-            red_fish_num -= 1
-            total_fish_num -= 1
-            num_fish_curr_pond -= 1
+        // clearTimeout(fish_appear_timeout);
+        // fish_appear_timeout = setTimeout(() => {
+        //     console.log("---- Reloading dom because 5 seconds have passed since fish appeared")
+        //     // Decrement fish
+        //     red_fish_num -= 1
+        //     total_fish_num -= 1
+        //     num_fish_curr_pond -= 1
 
-            console.log("-- round_over:", round_over)
-            if (num_fish_curr_pond === 1){
-                return false
-            }
+        //     console.log("-- round_over:", round_over)
+        //     if (num_fish_curr_pond === 1){
+        //         return false
+        //     }
 
-            // Reload DOM
-            // Update game state with cached values
-            game_state = game_setup
-            game_state = appendTextAfter(game_state, 'lake>', lake_state)
+        //     // Reload DOM
+        //     // Update game state with cached values
+        //     game_state = game_setup
+        //     game_state = appendTextAfter(game_state, 'lake>', lake_state)
             
-            game_state = appendTextAfter(game_state, 'Trip Bank (points): </strong>', trip_bank)
-            game_state = appendTextAfter(game_state, 'Total Fish Caught: </strong>', tournament_bank)
-            game_state = appendTextAfter(game_state, "Catch N' ", release)
-            game_state = appendTextAfter(game_state, "weathertext>", weather)
+        //     game_state = appendTextAfter(game_state, 'Trip Bank (points): </strong>', trip_bank)
+        //     game_state = appendTextAfter(game_state, 'Total Fish Caught: </strong>', tournament_bank)
+        //     game_state = appendTextAfter(game_state, "Catch N' ", release)
+        //     game_state = appendTextAfter(game_state, "weathertext>", weather)
             
-            $('.jspsych-display-element').html(game_state)
-            $('.lake').css("background-color", "LightBlue")
+        //     $('.jspsych-display-element').html(game_state)
+        //     $('.lake').css("background-color", "LightBlue")
 
-        }, 5000);
+        // }, 5000);
+
     }, fishWaitingTime());
 
-    return false;
 }
 
 var fishWaitingTime = function() {
