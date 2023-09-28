@@ -85,13 +85,13 @@ function getGame() {
     // Update game state with cached values
     game_state = game_setup
     game_state = appendTextAfter(game_state, 'lake>', lake_state)
-    
+
     game_state = appendTextAfter(game_state, 'Trip Bank (points): </strong>', trip_bank)
     game_state = appendTextAfter(game_state, 'Total Fish Caught: </strong>', tournament_bank)
     game_state = appendTextAfter(game_state, "Catch N' ", release)
     game_state = appendTextAfter(game_state, "weathertext>", weather)
     game_state = appendTextAfter(game_state, "goFish(true) disabled", "='true'")
-    
+
     $('.jspsych-display-element').html(game_state)
     $('.lake').css("background-color", "LightBlue")
     
@@ -104,10 +104,6 @@ function getGame() {
         clearTimeout(fish_appear_timeout);
         fish_appear_timeout = setTimeout(() => {
             console.log("---- Reloading dom because 5 seconds have passed since fish appeared")
-            // Decrement fish
-            // red_fish_num -= 1
-            // total_fish_num -= 1
-            // num_fish_curr_pond -= 1
 
             // Trigger end of block button
             var hiddenTrigger = document.getElementById("hiddenTrigger");
@@ -172,7 +168,7 @@ function makeFish(fish_num) {
     $("#goFish").prop("disabled", false);
     // $("#rbutton_"+i).prop("disabled",true);
     red_fish_num = 0
-    total_fish_num = 0
+
     filled_areas = [];
     if (max_x === 0) {
         min_x = $('.lake').width() * 0.05;
@@ -192,13 +188,13 @@ function makeFish(fish_num) {
     //     console.log("=== Reloading dom because 5 seconds have passed since fish appeared")
     //     $('#red_fish' + red_fish_num).remove()
     //     red_fish_num -= 1
-    //     total_fish_num -= 1
+
     //     num_fish_curr_pond -= 1
 
     //     lake_state = $('.lake').html()
     // }, 5000);
 
-    total_fish_num = red_fish_num
+
 }
 
 function goFish(shouldPay) {
@@ -215,7 +211,7 @@ function goFish(shouldPay) {
         trip_bank = 0
         $(".lake").html('')
         red_fish_num = 0
-        total_fish_num = 0
+    
         last_pay = 0
         round_over = 1
         round_num += 1
@@ -226,7 +222,7 @@ function goFish(shouldPay) {
     } else {
         $('#red_fish' + red_fish_num).remove()
         red_fish_num -= 1
-        total_fish_num -= 1
+    
         num_fish_curr_pond -= 1
 
         if (shouldPay){
@@ -263,7 +259,7 @@ function collect() {
     $('#tournament_bank').html('<strong>Total Fish Caught:</strong> ' + tournament_bank)
     $('#trip_bank').html('<strong>Trip Bank (points):</strong> ' + trip_bank)
     red_fish_num = 0
-    total_fish_num = 0
+
     indx_fish_curr_pond += 1
     num_fish_curr_pond = num_fish_in_ponds[indx_fish_curr_pond]
     lake_state = $('.lake').html()
@@ -715,12 +711,12 @@ var num_fish_in_ponds = [5,5,5,5,5]
 var indx_fish_curr_pond = 0
 var num_fish_curr_pond = num_fish_in_ponds[indx_fish_curr_pond]
 var red_fish_num = num_fish_curr_pond
-var total_fish_num = num_fish_curr_pond
-var start_fish_num = 0
+
 var trip_bank = 0
 var tournament_bank = 0
 var total_points = 0 // used to determine bonus pay
     //each block defines the weather and release law
+
 var blocks = [{
     weather: "Sunny",
     release: "Keep"
@@ -882,10 +878,7 @@ var round_over_block = {
     timing_post_trial: 30000,
     on_finish: function() {
         jsPsych.data.addDataToLastTrial({
-            exp_stage: exp_stage,
-            // caught_blue: caught_blue,
-            weather: weather,
-            release: release
+            exp_stage: exp_stage
         })
     },
 };
@@ -900,51 +893,6 @@ var update_performance_var_block = {
     }
 }
 
-var set_fish_block = {
-    type: 'call-function',
-    on_finish: function() {
-        jsPsych.data.addDataToLastTrial({
-            exp_stage: exp_stage
-        })
-    },
-    data: {
-        trial_id: "set_fish"
-    },
-    func: function() {
-        var last_data = jsPsych.data.getData().slice(-1)[0]
-        var last_response = parseInt(last_data.responses.slice(7, 10))
-        start_fish_num = last_response + 1
-        if (isNaN(start_fish_num) || start_fish_num >= 200 || start_fish_num < 0) {
-            start_fish_num = Math.floor(Math.random() * 200) + 1
-        }
-    },
-    timing_post_trial: 0,
-}
-
-var practice_block = {
-    type: 'single-stim-button',
-    stimulus: getGame,
-    button_class: 'select-button',
-    data: get_practice_data,
-    timing_post_trial: 0,
-    on_finish: function() {
-        jsPsych.data.addDataToLastTrial({
-            'pay_on_trial': last_pay
-        })
-    }
-};
-
-
-var practice_node = {
-    timeline: [practice_block],
-    loop_function: function(data) {
-        if (round_over == 1) {
-            return false
-        } else {
-            return true
-        }
-    }
-}
 
 var game_block = {
     type: 'single-stim-button',
@@ -954,7 +902,11 @@ var game_block = {
     timing_post_trial: 0,
     on_finish: function() {
         jsPsych.data.addDataToLastTrial({
-            'pay_on_trial': last_pay
+            'pay_on_trial': last_pay,
+            'round_num': round_num,
+            'total_fish_in_pond': num_fish_in_ponds[indx_fish_curr_pond - 1],
+            'trip_bank': trip_bank,
+            'tournament_bank': tournament_bank
         })
     }
 };
@@ -1020,6 +972,7 @@ var tournament_intro_block_practice = {
 
 
 angling_risk_task_experiment.push(start_test_block)
+
 // TODO: Remove this blocks iteration, doesn't make sense
 for (b = 0; b < blocks.length; b++) {
     block = blocks[b]
@@ -1027,13 +980,6 @@ for (b = 0; b < blocks.length; b++) {
     release = block.release
     weather_rule = "you can see how many fish are in the lake"
     
-    if (release == "Keep") {
-        start_fish_num = 128
-        release_rule = "the fish you catch comes out of the lake"
-    } else {
-        start_fish_num = 65
-        release_rule = "the number of fish in the lake stays the same"
-    }
     var tournament_intro_block = {
         type: 'poldrack-text',
         text: '<div class = centerbox><p class = center-block-text>You will now start the game.' +
@@ -1043,14 +989,12 @@ for (b = 0; b < blocks.length; b++) {
         data: {
             weather: weather,
             release: release,
-            start_fish_num: start_fish_num,
             trial_id: "intro",
             exp_stage: "test"
         },
         on_finish: function(data) {
             weather = data.weather
             release = data.release
-            start_fish_num = data.start_fish_num
             tournament_bank = 0
             round_num = 0
         }
@@ -1065,5 +1009,4 @@ for (b = 0; b < blocks.length; b++) {
     }
     angling_risk_task_experiment.push(update_performance_var_block)
 }
-angling_risk_task_experiment.push(post_task_block)
 angling_risk_task_experiment.push(end_block)
