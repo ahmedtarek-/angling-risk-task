@@ -169,7 +169,7 @@ function makeFish(fish_num) {
     $(".redfish").remove();
     $(".bluefish").remove();
     $(".greyfish").remove();
-    $("#goFish")..prop("disabled", false);
+    $("#goFish").prop("disabled", false);
     // $("#rbutton_"+i).prop("disabled",true);
     red_fish_num = 0
     total_fish_num = 0
