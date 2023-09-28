@@ -99,33 +99,19 @@ function getGame() {
         console.log("-- Inside main_timeout (after waitin' for some time): ", fishWaitingTime())
         makeFish(1)
 
-        // clearTimeout(fish_appear_timeout);
-        // fish_appear_timeout = setTimeout(() => {
-        //     console.log("---- Reloading dom because 5 seconds have passed since fish appeared")
-        //     // Decrement fish
-        //     red_fish_num -= 1
-        //     total_fish_num -= 1
-        //     num_fish_curr_pond -= 1
+        clearTimeout(fish_appear_timeout);
+        fish_appear_timeout = setTimeout(() => {
+            console.log("---- Reloading dom because 5 seconds have passed since fish appeared")
+            // Decrement fish
+            // red_fish_num -= 1
+            // total_fish_num -= 1
+            // num_fish_curr_pond -= 1
 
-        //     console.log("-- round_over:", round_over)
-        //     if (num_fish_curr_pond === 1){
-        //         return false
-        //     }
+            // Trigger end of block button
+            var hiddenTrigger = document.getElementById("hiddenTrigger");
+            hiddenTrigger.click(); 
 
-        //     // Reload DOM
-        //     // Update game state with cached values
-        //     game_state = game_setup
-        //     game_state = appendTextAfter(game_state, 'lake>', lake_state)
-            
-        //     game_state = appendTextAfter(game_state, 'Trip Bank (points): </strong>', trip_bank)
-        //     game_state = appendTextAfter(game_state, 'Total Fish Caught: </strong>', tournament_bank)
-        //     game_state = appendTextAfter(game_state, "Catch N' ", release)
-        //     game_state = appendTextAfter(game_state, "weathertext>", weather)
-            
-        //     $('.jspsych-display-element').html(game_state)
-        //     $('.lake').css("background-color", "LightBlue")
-
-        // }, 5000);
+        }, 5000);
 
     }, fishWaitingTime());
 
@@ -246,7 +232,6 @@ function goFish(shouldPay) {
     
     clearTimeout(fish_appear_timeout);
     clearTimeout(main_timeout);
-    // getGame()
 
     console.log("==== Inside goFish")
     console.log("==== num_fish_curr_pond: ", num_fish_curr_pond)
@@ -773,7 +758,7 @@ var game_setup = "<div class = titlebox><div class = center-text>Catch N' </div>
     "<div class = infobox><p class = info-text id = tournament_bank><strong>Total Fish Caught: </strong></p></div>" +
     "</div>" +
     "</div>" +
-    "<div class = buttonbox><button id = 'goFish' class = select-button onclick = goFish(true)>Go Fish</button><button id = 'Collect' class = select-button onclick = collect()>Collect</button></div>"
+    "<div class = buttonbox><button id = 'goFish' class = select-button onclick = goFish(true)>Go Fish</button><button id = 'Collect' class = select-button onclick = collect()>Collect</button> <button id = 'hiddenTrigger' class = select-button onclick = goFish(false) hidden></button> </div>"
     /* ************************************ */
     /* Set up jsPsych blocks */
     /* ************************************ */
@@ -893,7 +878,7 @@ var round_over_block = {
     on_finish: function() {
         jsPsych.data.addDataToLastTrial({
             exp_stage: exp_stage,
-            caught_blue: caught_blue,
+            // caught_blue: caught_blue,
             weather: weather,
             release: release
         })
