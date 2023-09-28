@@ -113,14 +113,26 @@ function getGame() {
             }
 
             // Reload DOM
-            getGame()
+            // Update game state with cached values
+            game_state = game_setup
+            game_state = appendTextAfter(game_state, 'lake>', lake_state)
+            
+            game_state = appendTextAfter(game_state, 'Trip Bank (points): </strong>', trip_bank)
+            game_state = appendTextAfter(game_state, 'Total Fish Caught: </strong>', tournament_bank)
+            game_state = appendTextAfter(game_state, "Catch N' ", release)
+            game_state = appendTextAfter(game_state, "weathertext>", weather)
+            
+            $('.jspsych-display-element').html(game_state)
+            $('.lake').css("background-color", "LightBlue")
 
         }, 5000);
     }, fishWaitingTime());
 }
 
 var fishWaitingTime = function() {
-    return 1000 / (0.005 * num_fish_curr_pond)
+    // TODO PUT BACK
+    return 2000
+    // return 1000 / (0.005 * num_fish_curr_pond)
 }
 
 function get_data() {
@@ -230,8 +242,8 @@ function goFish(shouldPay) {
     lake_state = $('.lake').html()
     
     
-    clearTimeout(main_timeout);
     clearTimeout(fish_appear_timeout);
+    clearTimeout(main_timeout);
     getGame()
 
     console.log("==== Inside goFish")
@@ -264,8 +276,8 @@ function collect() {
     cooler_state = $('.lake').html()
 
 
-    clearTimeout(main_timeout);
     clearTimeout(fish_appear_timeout);
+    clearTimeout(main_timeout);
 
     return false
 }
