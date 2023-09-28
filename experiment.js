@@ -127,6 +127,8 @@ function getGame() {
 
         }, 5000);
     }, fishWaitingTime());
+
+    return false;
 }
 
 var fishWaitingTime = function() {
@@ -383,6 +385,7 @@ var performance_var = 0
 // task specific variables
 var num_practice_rounds = 1
 var num_rounds = 5
+// TODO put back
 // var num_fish_in_ponds = [6,8,8,1,4,11,6,5,6,2,6,4,5,6,6,2,17,3,8,3,8,23,5,13,7,3,8,7,2,5,8,
 //     5,15,4,6,9,5,7,6,8,3,7,15,10,12,7,5,8,2,11,16,7,4,5,13,11,3,7,5,2,12,
 //     3,7,2,7,5,7,4,6,4,1,8,17,5,7,2,7,8,5,3,5,2,8,10,6,9,10,6,10,7,12,
@@ -718,7 +721,7 @@ var num_rounds = 5
 //     9,9,10,12,6,5,12,8,16,2,6,13,9,7,13,2,7,5,5,5,12,11,12,14,8,1,3,5,17,14,
 //     ]
 // var num_fish_in_ponds = jsPsych.randomization.shuffle(num_fish_in_ponds)
-var num_fish_in_ponds = [100,99,98,60,40,35,20]
+var num_fish_in_ponds = [5,5,5,5,5]
 var indx_fish_curr_pond = 0
 var num_fish_curr_pond = num_fish_in_ponds[indx_fish_curr_pond]
 var red_fish_num = num_fish_curr_pond
