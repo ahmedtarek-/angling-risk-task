@@ -90,7 +90,7 @@ function getGame() {
     game_state = appendTextAfter(game_state, 'Total Fish Caught: </strong>', tournament_bank)
     game_state = appendTextAfter(game_state, "Catch N' ", release)
     game_state = appendTextAfter(game_state, "weathertext>", weather)
-    game_state = appendTextAfter(game_state, "goFish(true)", " disabled")
+    game_state = appendTextAfter(game_state, "goFish(true) disabled", "='true'")
     
     $('.jspsych-display-element').html(game_state)
     $('.lake').css("background-color", "LightBlue")
@@ -98,12 +98,13 @@ function getGame() {
     clearTimeout(main_timeout);
     main_timeout = setTimeout(() => {
         console.log("-- Inside main_timeout (after waitin' for some time): ", fishWaitingTime())
-        makeFish(1)
 
         game_state = game_setup
-        game_state = appendTextAfter(game_state, "goFish(true)", " disabled")
+        game_state = appendTextAfter(game_state, "goFish(true) disabled", "='false'")
         
         $('.jspsych-display-element').html(game_state)
+
+        makeFish(1)
 
         clearTimeout(fish_appear_timeout);
         fish_appear_timeout = setTimeout(() => {
@@ -765,7 +766,7 @@ var game_setup = "<div class = titlebox><div class = center-text>Catch N' </div>
     "<div class = infobox><p class = info-text id = tournament_bank><strong>Total Fish Caught: </strong></p></div>" +
     "</div>" +
     "</div>" +
-    "<div class = buttonbox><button id = 'goFish' class = select-button onclick = goFish(true)>Go Fish</button><button id = 'Collect' class = select-button onclick = collect()>Collect</button> <button id = 'hiddenTrigger' class = select-button onclick = goFish(false) hidden></button> </div>"
+    "<div class = buttonbox><button id = 'goFish' class = select-button onclick = goFish(true) disabled>Go Fish</button><button id = 'Collect' class = select-button onclick = collect()>Collect</button> <button id = 'hiddenTrigger' class = select-button onclick = goFish(false) hidden></button> </div>"
     /* ************************************ */
     /* Set up jsPsych blocks */
     /* ************************************ */

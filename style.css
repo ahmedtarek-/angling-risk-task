@@ -57,6 +57,11 @@
     background:-webkit-linear-gradient(top, #d1d1d1 0%,#ECECEC 100%);
 }
 
+.select-button:disabled, .select-button[disabled] {
+  border-color: grey;
+  background-color: grey;
+}
+
 
 .infocontainer {
   width: 45vw;
