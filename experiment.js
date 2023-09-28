@@ -75,7 +75,9 @@ function getGame() {
 
 
     var goFishButton = document.getElementById("goFish");
-    goFishButton.disabled = true;
+    if (goFishButton !== null) {
+        goFishButton.disabled = true;
+    }
 
     console.log("-- Inside getGame --")
     console.log("-- round_over:", round_over)
@@ -104,7 +106,9 @@ function getGame() {
         makeFish(1)
 
         var goFishButton = document.getElementById("goFish");
-        goFishButton.disabled = false;
+        if (goFishButton !== null) {
+            goFishButton.disabled = false;
+        }
 
         clearTimeout(fish_appear_timeout);
         fish_appear_timeout = setTimeout(() => {
