@@ -246,7 +246,7 @@ function goFish(shouldPay) {
     
     clearTimeout(fish_appear_timeout);
     clearTimeout(main_timeout);
-    getGame()
+    // getGame()
 
     console.log("==== Inside goFish")
     console.log("==== num_fish_curr_pond: ", num_fish_curr_pond)
