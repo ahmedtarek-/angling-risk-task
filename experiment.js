@@ -73,6 +73,10 @@ function getGame() {
     function, which...makes fish.
     */
 
+
+    var goFishButton = document.getElementById("goFish");
+    goFishButton.disabled = true;
+
     console.log("-- Inside getGame --")
     console.log("-- round_over:", round_over)
 
@@ -98,6 +102,9 @@ function getGame() {
     main_timeout = setTimeout(() => {
         console.log("-- Inside main_timeout (after waitin' for some time): ", fishWaitingTime())
         makeFish(1)
+
+        var goFishButton = document.getElementById("goFish");
+        goFishButton.disabled = false;
 
         clearTimeout(fish_appear_timeout);
         fish_appear_timeout = setTimeout(() => {
@@ -205,6 +212,9 @@ function goFish(shouldPay) {
 
     if (num_fish_curr_pond === 1) {
         $('#blue_fish').remove();
+        // Update tournament back
+        tournament_bank += trip_bank
+
         trip_bank = 0
         $(".lake").html('')
         red_fish_num = 0
@@ -215,6 +225,7 @@ function goFish(shouldPay) {
         round_over_text = "There's no more fish in this pond. Now you go to the next pond"
         indx_fish_curr_pond += 1
         num_fish_curr_pond = num_fish_in_ponds[indx_fish_curr_pond]
+
     } else {
         $('#red_fish' + red_fish_num).remove()
         red_fish_num -= 1
@@ -248,7 +259,6 @@ function collect() {
         " points) and moved it to your Total Fish Caught."
         // Tranfers points from trip bank to Total Fish Caught and ends the round. Coded as keycode 35 for jspsych
     tournament_bank += trip_bank
-    tournment_bank = tournament_bank
     trip_bank = 0
 
     $(".redfish").remove();
@@ -262,13 +272,11 @@ function collect() {
     lake_state = $('.lake').html()
     cooler_state = $('.lake').html()
 
-
     clearTimeout(fish_appear_timeout);
     clearTimeout(main_timeout);
 
     return false
 }
-
 
 
 function calc_overlap(a1) {
