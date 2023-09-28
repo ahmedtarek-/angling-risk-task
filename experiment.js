@@ -99,11 +99,6 @@ function getGame() {
     main_timeout = setTimeout(() => {
         console.log("-- Inside main_timeout (after waitin' for some time): ", fishWaitingTime())
 
-        game_state = game_setup
-        game_state = appendTextAfter(game_state, "goFish(true) disabled", "='false'")
-        
-        $('.jspsych-display-element').html(game_state)
-
         makeFish(1)
 
         clearTimeout(fish_appear_timeout);
@@ -174,6 +169,8 @@ function makeFish(fish_num) {
     $(".redfish").remove();
     $(".bluefish").remove();
     $(".greyfish").remove();
+    $("#goFish")..prop("disabled", false);
+    // $("#rbutton_"+i).prop("disabled",true);
     red_fish_num = 0
     total_fish_num = 0
     filled_areas = [];
