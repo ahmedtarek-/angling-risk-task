@@ -63,7 +63,7 @@ function appendTextAfter(input, search_term, new_text) {
 
 function getRoundOverText() {
     return '<div class = centerbox><p class = center-block-text>' + round_over_text +
-        ' The round is over.</p><p class = center-block-text>Press <strong>enter</strong> to begin.</p></div>'
+        ' Diesen Teich können Sie nicht mehr beangeln</p><p class = center-block-text>Drücken Sie <strong>enter</strong> um zum nächsten Teich zu gehen.</p></div>'
 }
 
 function getGame() {
@@ -86,8 +86,8 @@ function getGame() {
     game_state = game_setup
     game_state = appendTextAfter(game_state, 'lake>', lake_state)
 
-    game_state = appendTextAfter(game_state, 'Trip Bank (points): </strong>', trip_bank)
-    game_state = appendTextAfter(game_state, 'Total Fish Caught: </strong>', tournament_bank)
+    game_state = appendTextAfter(game_state, 'Fische (Teich): </strong>', trip_bank)
+    game_state = appendTextAfter(game_state, 'Bonuspunkte Insgesamt: </strong>', tournament_bank)
     game_state = appendTextAfter(game_state, "Catch N' ", release)
     game_state = appendTextAfter(game_state, "weathertext>", weather)
     game_state = appendTextAfter(game_state, "goFish(true) disabled", "='true'")
@@ -248,16 +248,15 @@ function collect() {
     console.log("-- Inside collect")
     round_over = 1
     round_num += 1
-    round_over_text = "You collected the points from the trip bank (" + trip_bank +
-        " points) and moved it to your Total Fish Caught."
+    round_over_text = "Du hast " + trip_bank +
+        " Fische gesammelt und sie zu deinen Bonuspunkten addiert."
         // Tranfers points from trip bank to Total Fish Caught and ends the round. Coded as keycode 35 for jspsych
     tournament_bank += trip_bank
-    trip_bank = 0
 
     $(".redfish").remove();
     $(".bluefish").remove();
-    $('#tournament_bank').html('<strong>Total Fish Caught:</strong> ' + tournament_bank)
-    $('#trip_bank').html('<strong>Trip Bank (points):</strong> ' + trip_bank)
+    $('#tournament_bank').html('<strong>Total Bonuspunkte Insgesamt </strong> ' + tournament_bank)
+    $('#trip_bank').html('<strong>Fische (Teich):</strong> ' + trip_bank)
     red_fish_num = 0
 
     indx_fish_curr_pond += 1
@@ -742,7 +741,7 @@ var filled_areas = [];
 var fish_appear_timeout = null;
 var main_timeout = null;
 
-var game_setup = "<div class = titlebox><div class = center-text>Catch N' </div></div>" +
+var game_setup = "<div class = titlebox><div class = center-text>Angelexperiment</div></div>" +
     "<div class = lake></div>" +
     // "<div class = cooler><p class = info-text>&nbsp<strong>Red Fish in Cooler: </strong></p></div>" +
     "<div class = weatherbox><div class = center-text id = weathertext></div></div>" +
@@ -755,11 +754,11 @@ var game_setup = "<div class = titlebox><div class = center-text>Catch N' </div>
     "<div class = imgbox></div>" +
     "</div>" +
     "<div class = subinfocontainer>" +
-    "<div class = infobox><p class = info-text id = trip_bank><strong>Trip Bank (points): </strong></p></div> " +
-    "<div class = infobox><p class = info-text id = tournament_bank><strong>Total Fish Caught: </strong></p></div>" +
+    "<div class = infobox><p class = info-text id = trip_bank><strong>Fische (Teich): </strong></p></div> " +
+    "<div class = infobox><p class = info-text id = tournament_bank><strong>Bonuspunkte Insgesamt: </strong></p></div>" +
     "</div>" +
     "</div>" +
-    "<div class = buttonbox><button id = 'goFish' class = select-button onclick = goFish(true) disabled>Go Fish</button><button id = 'Collect' class = select-button onclick = collect()>Collect</button> <button id = 'hiddenTrigger' class = select-button onclick = goFish(false) hidden></button> </div>"
+    "<div class = buttonbox><button id = 'goFish' class = select-button onclick = goFish(true) disabled>Fischen</button><button id = 'Collect' class = select-button onclick = collect()>Teich wechseln</button> <button id = 'hiddenTrigger' class = select-button onclick = goFish(false) hidden></button> </div>"
     /* ************************************ */
     /* Set up jsPsych blocks */
     /* ************************************ */
@@ -832,7 +831,7 @@ var instruction_node = {
                 'Read through instructions too quickly.  Please take your time and make sure you understand the instructions.  Press <strong>enter</strong> to continue.'
             return true
         } else if (sumInstructTime > instructTimeThresh * 1000) {
-            feedback_instruct_text = 'Done with instructions. Press <strong>enter</strong> to continue.'
+            feedback_instruct_text = 'Ende der Anleitung. Drücken Sie <strong>enter</strong> um fortzufahren.'
             return false
         }
     }
@@ -856,7 +855,7 @@ var conditions_instructions_block = {
 
 var end_block = {
     type: 'poldrack-text',
-    text: '<div class = centerbox><p class = center-block-text>Thanks for completing this task!</p><p class = center-block-text>Press <strong>enter</strong> to begin.</p></div>',
+    text: '<div class = centerbox><p class = center-block-text>Danke!</p><p class = center-block-text>Drücken Sie <strong>enter</strong> um fortzufahren.</p></div>',
     cont_key: [13],
     data: {
         trial_id: "end",
@@ -923,13 +922,108 @@ var game_node = {
     }
 }
 
-var start_test_block = {
+
+/*
+Set up instructions
+*/
+
+
+var intro_1 = {
     type: 'poldrack-text',
     data: {
         trial_id: "test_intro"
     },
     timing_response: 180000,
-    text: '<div class = centerbox><p class = center-block-text>Done with practice! We will now start the test tournaments. There will be four tournaments, each with 30 rounds of fishing.</p><p class = center-block-text>Press <strong>enter</strong> to begin the test.</p></div>',
+    text: '<div class = intro_1><div></div></div>',
+    cont_key: [13],
+    timing_post_trial: 0,
+    on_finish: function() {
+        tournament_bank = 0
+        exp_stage = 'test'
+    }
+};
+var intro_2 = {
+    type: 'poldrack-text',
+    data: {
+        trial_id: "test_intro"
+    },
+    timing_response: 180000,
+    text: '<div class = intro_2><div></div></div>',
+    cont_key: [13],
+    timing_post_trial: 0,
+    on_finish: function() {
+        tournament_bank = 0
+        exp_stage = 'test'
+    }
+};
+
+var intro_3 = {
+    type: 'poldrack-text',
+    data: {
+        trial_id: "test_intro"
+    },
+    timing_response: 180000,
+    text: '<div class = intro_3><div></div></div>',
+    cont_key: [13],
+    timing_post_trial: 0,
+    on_finish: function() {
+        tournament_bank = 0
+        exp_stage = 'test'
+    }
+};
+
+var intro_4 = {
+    type: 'poldrack-text',
+    data: {
+        trial_id: "test_intro"
+    },
+    timing_response: 180000,
+    text: '<div class = intro_4><div></div></div>',
+    cont_key: [13],
+    timing_post_trial: 0,
+    on_finish: function() {
+        tournament_bank = 0
+        exp_stage = 'test'
+    }
+};
+
+var intro_5 = {
+    type: 'poldrack-text',
+    data: {
+        trial_id: "test_intro"
+    },
+    timing_response: 180000,
+    text: '<div class = intro_5><div></div></div>',
+    cont_key: [13],
+    timing_post_trial: 0,
+    on_finish: function() {
+        tournament_bank = 0
+        exp_stage = 'test'
+    }
+};
+
+var intro_6 = {
+    type: 'poldrack-text',
+    data: {
+        trial_id: "test_intro"
+    },
+    timing_response: 180000,
+    text: '<div class = intro_6><div></div></div>',
+    cont_key: [13],
+    timing_post_trial: 0,
+    on_finish: function() {
+        tournament_bank = 0
+        exp_stage = 'test'
+    }
+};
+
+var intro_7 = {
+    type: 'poldrack-text',
+    data: {
+        trial_id: "test_intro"
+    },
+    timing_response: 180000,
+    text: '<div class = intro_7><div></div></div>',
     cont_key: [13],
     timing_post_trial: 0,
     on_finish: function() {
@@ -971,7 +1065,14 @@ var tournament_intro_block_practice = {
 }
 
 
-angling_risk_task_experiment.push(start_test_block)
+angling_risk_task_experiment.push(intro_1)
+angling_risk_task_experiment.push(intro_2)
+angling_risk_task_experiment.push(intro_3)
+angling_risk_task_experiment.push(intro_4)
+angling_risk_task_experiment.push(intro_5)
+angling_risk_task_experiment.push(intro_6)
+angling_risk_task_experiment.push(intro_7)
+
 
 // TODO: Remove this blocks iteration, doesn't make sense
 for (b = 0; b < blocks.length; b++) {
@@ -982,8 +1083,8 @@ for (b = 0; b < blocks.length; b++) {
     
     var tournament_intro_block = {
         type: 'poldrack-text',
-        text: '<div class = centerbox><p class = center-block-text>You will now start the game.' +
-            '</p><p class = center-block-text>Press <strong>enter</strong> to begin.</p></div>',
+        text: '<div class = centerbox><p class = center-block-text>Das Angelexperiment beginnt jetzt.' +
+            '</p><p class = center-block-text>Drücken sie <strong>enter</strong> um zu starten.</p></div>',
         cont_key: [13],
         timing_response: 120000,
         data: {
