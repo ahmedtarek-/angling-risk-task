@@ -73,12 +73,8 @@ function getGame() {
     function, which...makes fish.
     */
 
-    console.log("-- Inside getGame --")
-    console.log("-- round_over:", round_over)
-
     // On a start of a round the round_over is set to 0
     if (num_fish_curr_pond === num_fish_in_ponds[indx_fish_curr_pond]){
-        console.log("-- Inside the first of round condition")
         round_over = 0
     }
     
@@ -120,8 +116,7 @@ function getGame() {
 }
 
 var fishWaitingTime = function() {
-    // return 1000 / (0.005 * num_fish_curr_pond)
-    return 2000
+    return 1000 / (0.005 * num_fish_curr_pond)
 }
 
 function get_data() {
@@ -187,17 +182,6 @@ function makeFish(fish_num) {
     }
     place_fish()
 
-    // setTimeout(() => {
-    //     console.log("=== Reloading dom because 5 seconds have passed since fish appeared")
-    //     $('#red_fish' + red_fish_num).remove()
-    //     red_fish_num -= 1
-
-    //     num_fish_curr_pond -= 1
-
-    //     lake_state = $('.lake').html()
-    // }, 5000);
-
-
 }
 
 function goFish(shouldPay) {
@@ -208,18 +192,9 @@ function goFish(shouldPay) {
 
     if (num_fish_curr_pond === 0) {
         $('#blue_fish').remove();
-        // Update tournament back
+        
 
         $(".lake").html('')
-    
-        // tournament_bank += trip_bank
-        // trip_bank = 0
-        // red_fish_num = 0
-        // round_over = 1
-        // round_num += 1
-        // round_over_text = "There's no more fish in this pond. Now you go to the next pond"
-        // indx_fish_curr_pond += 1
-        // num_fish_curr_pond = num_fish_in_ponds[indx_fish_curr_pond]
 
     } else {
         $('#red_fish' + red_fish_num).remove()
@@ -240,8 +215,6 @@ function goFish(shouldPay) {
 
     console.log("==== Inside goFish")
     console.log("==== num_fish_curr_pond: ", num_fish_curr_pond)
-    console.log("==== trip_bank: ", trip_bank)
-    console.log("==== tournament_bank: ", tournament_bank)
 }
 
 function collect() {
@@ -706,7 +679,6 @@ var num_fish_in_ponds = [6,8,8,1,4,11,6,5,6,2,6,4,5,6,6,2,17,3,8,3,8,23,5,13,7,3
     9,9,10,12,6,5,12,8,16,2,6,13,9,7,13,2,7,5,5,5,12,11,12,14,8,1,3,5,17,14,
     ]
 var num_fish_in_ponds = jsPsych.randomization.shuffle(num_fish_in_ponds)
-var num_fish_in_ponds = [5,5,5,5]
 var indx_fish_curr_pond = 0
 var num_fish_curr_pond = num_fish_in_ponds[indx_fish_curr_pond]
 var red_fish_num = num_fish_curr_pond
@@ -912,7 +884,6 @@ var game_block = {
 var game_node = {
     timeline: [game_block],
     loop_function: function(data) {
-        console.log("-- Inside game_node, round_over: ", round_over)
         if (round_over == 1) {
             return false
         } else {
