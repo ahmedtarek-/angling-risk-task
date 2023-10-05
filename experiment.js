@@ -96,22 +96,26 @@ function getGame() {
     $('.lake').css("background-color", "LightBlue")
     
     clearTimeout(main_timeout);
-    main_timeout = setTimeout(() => {
-        console.log("-- Inside main_timeout (after waitin' for some time): ", fishWaitingTime())
 
-        makeFish(1)
+    // Don't make fish if there's no fish
+    if (num_fish_curr_pond > 0){
+        main_timeout = setTimeout(() => {
+            console.log("-- Inside main_timeout (after waitin' for some time): ", fishWaitingTime())
 
-        clearTimeout(fish_appear_timeout);
-        fish_appear_timeout = setTimeout(() => {
-            console.log("---- Reloading dom because 5 seconds have passed since fish appeared")
+            makeFish(1)
 
-            // Trigger end of block button
-            var hiddenTrigger = document.getElementById("hiddenTrigger");
-            hiddenTrigger.click(); 
+            clearTimeout(fish_appear_timeout);
+            fish_appear_timeout = setTimeout(() => {
+                console.log("---- Reloading dom because 5 seconds have passed since fish appeared")
 
-        }, 5000);
+                // Trigger end of block button
+                var hiddenTrigger = document.getElementById("hiddenTrigger");
+                hiddenTrigger.click(); 
 
-    }, fishWaitingTime());
+            }, 5000);
+
+        }, fishWaitingTime());
+    }
 
 }
 
