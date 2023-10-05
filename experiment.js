@@ -210,12 +210,11 @@ function goFish(shouldPay) {
         $(".lake").html('')
         red_fish_num = 0
     
-        last_pay = 0
-        round_over = 1
-        round_num += 1
-        round_over_text = "There's no more fish in this pond. Now you go to the next pond"
-        indx_fish_curr_pond += 1
-        num_fish_curr_pond = num_fish_in_ponds[indx_fish_curr_pond]
+        // round_over = 1
+        // round_num += 1
+        // round_over_text = "There's no more fish in this pond. Now you go to the next pond"
+        // indx_fish_curr_pond += 1
+        // num_fish_curr_pond = num_fish_in_ponds[indx_fish_curr_pond]
 
     } else {
         $('#red_fish' + red_fish_num).remove()
@@ -225,7 +224,6 @@ function goFish(shouldPay) {
             num_fish_curr_pond -= 1
 
             trip_bank += pay
-            last_pay = pay
         }
     }
 
@@ -242,7 +240,6 @@ function goFish(shouldPay) {
 }
 
 function collect() {
-
     console.log("-- Inside collect")
     round_over = 1
     round_num += 1
@@ -721,7 +718,7 @@ var exp_stage = 'practice'
 var practiceblocks = jsPsych.randomization.shuffle(blocks)
 var blocks = jsPsych.randomization.shuffle(blocks)
 var pay = 1 // payment for one red fish
-var last_pay = 0 //variable to hold the last amount of points received
+
 var lake_state = '' //variable for redrawing the board from trial to trial
 var trial_num = 0 // global variable to track the number of trials into a round
 var round_num = 0 // global variable to track the number of rounds into a tournament
@@ -898,7 +895,6 @@ var game_block = {
     timing_post_trial: 0,
     on_finish: function() {
         jsPsych.data.addDataToLastTrial({
-            'pay_on_trial': last_pay,
             'round_num': round_num,
             'total_fish_in_pond': num_fish_in_ponds[indx_fish_curr_pond - 1],
             'trip_bank': trip_bank,
