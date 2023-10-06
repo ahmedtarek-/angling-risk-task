@@ -142,7 +142,7 @@ var jsPsych = (function() {
     } else {
       if (current_trial.timing_post_trial > 0) {
 
-        DOM_target.html('<div class = centerbox><p class = center-block-text>Wir bauen die nachste Pond. Bitte haben sie geduld :)</p></div>');
+        DOM_target.html('<div class = centerbox><p class = center-block-text>Suche den nächsten Teich :)</p></div>');
         setTimeout(next_trial, current_trial.timing_post_trial);
       } else {
         next_trial();
