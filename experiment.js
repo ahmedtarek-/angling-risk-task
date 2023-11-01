@@ -83,7 +83,7 @@ function getGame() {
     game_state = appendTextAfter(game_state, 'lake>', lake_state)
 
     game_state = appendTextAfter(game_state, 'Fische (Teich): </strong>', trip_bank)
-    game_state = appendTextAfter(game_state, 'Bonuspunkte Insgesamt: </strong>', tournament_bank)
+    game_state = appendTextAfter(game_state, 'Bonuspunkte Gesamt: </strong>', tournament_bank)
     game_state = appendTextAfter(game_state, "Catch N' ", release)
     game_state = appendTextAfter(game_state, "weathertext>", weather)
     game_state = appendTextAfter(game_state, "goFish(true) disabled", "='true'")
@@ -221,14 +221,16 @@ function collect() {
     console.log("-- Inside collect")
     round_over = 1
     round_num += 1
-    round_over_text = "Du hast " + trip_bank +
-        " Fische gesammelt und sie zu deinen Bonuspunkten addiert."
+    round_over_text = "Sie haben " + trip_bank +
+        " Fische gesammelt und sie zu den Bonuspunkten addiert."
+
+    game_over_text = "Die Zeit ist nun Abgelaufen. Sie haben insgesamt" + tournament_bank + " Bonuspunkte gesammelt."
         // Tranfers points from trip bank to Total Fish Caught and ends the round. Coded as keycode 35 for jspsych
     tournament_bank += trip_bank
 
     $(".redfish").remove();
     $(".bluefish").remove();
-    $('#tournament_bank').html('<strong>Total Bonuspunkte Insgesamt </strong> ' + tournament_bank)
+    $('#tournament_bank').html('<strong>Total Bonuspunkte Gesamt </strong> ' + tournament_bank)
     $('#trip_bank').html('<strong>Fische (Teich):</strong> ' + trip_bank)
     red_fish_num = 0
 
@@ -236,7 +238,8 @@ function collect() {
     num_fish_curr_pond = num_fish_in_ponds[indx_fish_curr_pond]
     lake_state = $('.lake').html()
     cooler_state = $('.lake').html()
-
+    //reset trip bank.
+    trip_bank=0
     clearTimeout(fish_appear_timeout);
     clearTimeout(main_timeout);
 
@@ -726,7 +729,7 @@ var game_setup = "<div class = titlebox><div class = center-text>Angelexperiment
     "</div>" +
     "<div class = subinfocontainer>" +
     "<div class = infobox><p class = info-text id = trip_bank><strong>Fische (Teich): </strong></p></div> " +
-    "<div class = infobox><p class = info-text id = tournament_bank><strong>Bonuspunkte Insgesamt: </strong></p></div>" +
+    "<div class = infobox><p class = info-text id = tournament_bank><strong>Bonuspunkte Gesamt: </strong></p></div>" +
     "</div>" +
     "</div>" +
     "<div class = buttonbox><button id = 'goFish' class = select-button onclick = goFish(true) disabled>Fischen</button><button id = 'Collect' class = select-button onclick = collect()>Teich wechseln</button> <button id = 'hiddenTrigger' class = select-button onclick = goFish(false) hidden></button> </div>"
@@ -762,7 +765,7 @@ var post_task_block = {
 
 /* define static blocks */
 var feedback_instruct_text =
-    'Welcome to the experiment. This experiment will take around 25 minutes. Press <strong>enter</strong> to begin. </br> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Test-Logo.svg/783px-Test-Logo.svg.png.jpg" alt="Girl in a jacket" width=300>'
+    'Welcome to the experiment. This experiment will take 25 minutes. Press <strong>enter</strong> to begin. </br> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Test-Logo.svg/783px-Test-Logo.svg.png.jpg" alt="Girl in a jacket" width=300>'
 var feedback_instruct_block = {
     type: 'poldrack-text',
     cont_key: [13],
@@ -826,7 +829,8 @@ var conditions_instructions_block = {
 
 var end_block = {
     type: 'poldrack-text',
-    text: '<div class = centerbox><p class = center-block-text>Danke!</p><p class = center-block-text>Drücken Sie <strong>enter</strong> um fortzufahren.</p></div>',
+    
+    text: '<div class = infobox><p class = info-text id = tournament_bank><strong>Bonuspunkte Gesamt:'+tournament_bank+' </strong></p></div> Drücken Sie <strong>enter</strong> um fortzufahren.</p></div>',
 
     cont_key: [13],
     data: {
