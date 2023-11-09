@@ -718,7 +718,7 @@ var main_timeout = null;
 var game_setup = "<div class = titlebox><div class = center-text>Angelexperiment</div></div>" +
     "<div class = lake></div>" +
     // "<div class = cooler><p class = info-text>&nbsp<strong>Red Fish in Cooler: </strong></p></div>" +
-    "<div class = weatherbox><div class = center-text id = weathertext></div></div>" +
+    //"<div class = weatherbox><div class = center-text id = weathertext></div></div>" +
     "<div class = infocontainer>" +
     "<div class = subinfocontainer>" +
     // "<div class = infobox><p class = info-text id = red_count>&nbsp<strong># Red Fish in lake: </strong></p></div>" +
