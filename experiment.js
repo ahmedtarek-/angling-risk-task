@@ -224,7 +224,7 @@ function collect() {
     round_over_text = "Sie haben " + trip_bank +
         " Fische gesammelt und sie zu den Bonuspunkten addiert."
 
-    game_over_text = "Die Zeit ist nun Abgelaufen. Sie haben insgesamt" + tournament_bank + " Bonuspunkte gesammelt."
+    game_over_text = "Die Zeit ist nun Abgelaufen. Sie haben insgesamt" + total_points + " Bonuspunkte gesammelt."
         // Tranfers points from trip bank to Total Fish Caught and ends the round. Coded as keycode 35 for jspsych
     tournament_bank += trip_bank
 
@@ -342,10 +342,11 @@ var sumInstructTime = 0 //ms
 var instructTimeThresh = 0 ///in seconds
 var credit_var = true
 var performance_var = 0
+var bonuspoints = 0
 
 // task specific variables
 var num_practice_rounds = 1
-var num_rounds = 5
+var num_rounds = 2//DEBUG:2 change to arbitrarily high number for the experiment to last 25 minutes
 var num_fish_in_ponds = [6,8,8,1,4,11,6,5,6,2,6,4,5,6,6,2,17,3,8,3,8,23,5,13,7,3,8,7,2,5,8,
     5,15,4,6,9,5,7,6,8,3,7,15,10,12,7,5,8,2,11,16,7,4,5,13,11,3,7,5,2,12,
     3,7,2,7,5,7,4,6,4,1,8,17,5,7,2,7,8,5,3,5,2,8,10,6,9,10,6,10,7,12,
@@ -829,8 +830,10 @@ var conditions_instructions_block = {
 
 var end_block = {
     type: 'poldrack-text',
-    
-    text: '<div class = infobox><p class = info-text id = tournament_bank><strong>Bonuspunkte Gesamt:'+tournament_bank+' </strong></p></div> Drücken Sie <strong>enter</strong> um fortzufahren.</p></div>',
+    text: function(){
+        return('<div class = infobox><strong>Bonuspunkte Gesamt:'+total_points+' </strong></div><br>' +
+          'Klicken Sie auf Beenden um das Experiment abzuschließen </p></div>')
+      },
 
     cont_key: [13],
     data: {
@@ -839,8 +842,25 @@ var end_block = {
     },
     timing_response: 180000,
     timing_post_trial: 0,
-    on_finish: assessPerformance
+    on_finish: assessPerformance,
+    // display the correct number of bonus points
+    on_start: function(){
+        total_points=tournament_bank
+    }
 };
+
+
+/*
+var end_block = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: function(){
+      return('<div class = infobox><strong>Bonuspunkte Gesamt:'+total_points+' </strong></div><br>' +
+        'Klicken Sie auf Beenden um das Experiment abzuschließen </p></div>')
+    },
+    choices: ['Beenden'],
+    
+  };
+  */
 
 var round_over_block = {
     type: 'poldrack-text',
