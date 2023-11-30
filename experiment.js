@@ -688,7 +688,7 @@ var num_fish_in_ponds_base = [17, 2, 8, 1, 4, 11, 6, 5, 6, 2, 6, 4, 5, 6, 6, 2, 
 //var num_fish_in_ponds = jsPsych.randomization.shuffle(num_fish_in_ponds)
 var indx_fish_curr_pond = 0
 num_fish_in_ponds_base[0]=10
-let num_fish_in_ponds = num_fish_in_ponds_base.map(element => element + 2);//add 2 more fish
+let num_fish_in_ponds = num_fish_in_ponds_base.map(element => element + 1);//add 2 more fish
 var num_fish_curr_pond = num_fish_in_ponds[indx_fish_curr_pond]
 var red_fish_num = num_fish_curr_pond
 var num_rounds = 1000//DEBUG:2 change to arbitrarily high number for the experiment to last 25 minutes
