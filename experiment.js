@@ -750,7 +750,7 @@ var game_setup = "<div class = titlebox><div class = center-text></div></div>" +
 var end_block = {
     type: 'poldrack-text',
     text: function () {
-        return ('<div class = infobox><strong>Glückwunsch! <br> Sie haben ' + total_points + ' Bonuspunkte gesammelt! </strong></div><br>' +
+        return ('<div class = infobox><strong>Glückwunsch! <br> Sie haben ' + tournament_bank + ' Bonuspunkte gesammelt! </strong></div><br>' +
             'Drücken Sie Enter um das Experiment zu beenden  </p></div>')
     },
 
