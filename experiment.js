@@ -86,7 +86,6 @@ function getGame() {
     }
 
     // Update game state with cached values
-    console.log("hello")
     $(".redfish").remove();
 
     game_state = game_setup
@@ -104,7 +103,6 @@ function getGame() {
     // Don't make fish if there's no fish
     if (num_fish_curr_pond > 0) {
         main_timeout = setTimeout(() => {
-            console.log("-- Inside main_timeout (after waitin' for some time): ", fishWaitingTime())
 
             makeFish(1)
             // add event listener to fish to make it clickable
@@ -119,7 +117,6 @@ function getGame() {
             clearTimeout(fish_appear_timeout);
 
             fish_appear_timeout = setTimeout(() => {
-                console.log("---- Reloading dom because 5 seconds have passed since fish appeared")
                 // Trigger end of block button
                 var hiddenTrigger = document.getElementById("hiddenTrigger");
                 hiddenTrigger.click();
@@ -219,13 +216,9 @@ function goFish(shouldPay) {
     clearTimeout(fish_appear_timeout);
     clearTimeout(main_timeout);
 
-    console.log("==== Inside goFish")
-    console.log("==== num_fish_curr_pond: ", num_fish_curr_pond)
-
 }
 
 function collect() {
-    console.log("-- Inside collect")
     round_over = 1
     round_num += 1
     round_over_text = "Sie haben " + trip_bank +
